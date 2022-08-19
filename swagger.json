@@ -1,0 +1,20 @@
+{
+    "definition": {
+        "openapi": "3.0.0",
+        "info": {
+            "version": "1.0.0",
+            "title": "Mercenary App API",
+            "description": "API Usage Overview"
+        },
+        "host": "localhost:3000",
+        "basePath": "/",
+        "tags": [{
+            "name": "Users",
+            "description": "API for users in the system"
+        }],
+        "schemes": ["http"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"]
+    },
+    "apis": ["http://localhost:3000"]
+}
