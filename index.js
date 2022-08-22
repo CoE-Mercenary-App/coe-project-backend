@@ -20,8 +20,9 @@ const route = require('./routes');
 
 app.use(express.static('public'));
 app.use('/api/', require('./routes/app'));
-app.use('/api/users/', route.userRoute);
 app.use('/api/login/', route.authRoute);
+app.use('/api/users/', route.userRoute);
+app.use('/api/services/', route.serviceRoute);
 
 app.use('/api-doc/', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 

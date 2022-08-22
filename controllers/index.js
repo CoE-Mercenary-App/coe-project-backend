@@ -1,3 +1,5 @@
+const { login, renewToken } = require('./core/auth.controller');
+
 const {
     getUsers,
     getUsersPagination,
@@ -7,16 +9,26 @@ const {
     deleteUser
 } = require('./core/user.controller');
 
-const { login, renewToken } = require('./core/auth.controller');
+const {
+    getServices,
+    newService,
+    updateService,
+    deleteService
+} = require('./business/service.controller');
+
 
 
 Object.assign(module.exports, {
+    login,
     getUsers,
     getUsersPagination,
     newUser,
     updateUser,
     updateUserPws,
     deleteUser,
-    login,
-    renewToken
+    renewToken,
+    getServices,
+    newService,
+    updateService,
+    deleteService
 });
