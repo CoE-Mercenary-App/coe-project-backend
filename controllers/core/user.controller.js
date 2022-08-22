@@ -40,12 +40,12 @@ const getUsers = async(req, res) => {
 
 const getUsersPagination = async(req, res) => {
 
-    const desde = Number(req.query.desde) || 0;
+    const page = Number(req.query.page) || 0;
 
     const [users, total] = await Promise.all([
         User
         .find({ role: { $ne: "SUPER_ROLE" } }, 'name email role img active')
-        .skip(desde)
+        .skip(page)
         .limit(5)
         .sort({ name: 1 }),
         User.countDocuments()

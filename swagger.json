@@ -9,12 +9,316 @@
         "host": "localhost:3000",
         "basePath": "/",
         "tags": [{
-            "name": "Users",
-            "description": "API for users in the system"
+            "name": "User",
+            "description": "API for Users"
+        },
+        {
+            "name": "Service",
+            "description": "API for Service"
         }],
         "schemes": ["http"],
         "consumes": ["application/json"],
-        "produces": ["application/json"]
+        "produces": ["application/json"],
+        "components":{
+            "schemas":{
+                "User": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The user Name",
+                            "example": "Bruno Diaz"
+                        },
+                        "email": {
+                            "type": "string",
+                            "description": "The user Email",
+                            "example": "batman1970@gmail.com"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "The user Password",
+                            "example": "b4tm4n2022"
+                        },
+                        "location": {
+                            "type": "string",
+                            "description": "The user Location",
+                            "example": "Gotica"
+                        },
+                        "industry": {
+                            "type": "string",
+                            "description": "The user Industry",
+                            "example": "Justicia"
+                        },
+                        "img": {
+                            "type": "string",
+                            "description": "The user Avatar",
+                            "example": "http://google.com.photos.batman.png"
+                        },
+                        "role": {
+                            "type": "string",
+                            "description": "The user Role",
+                            "default": "USER_ROLE"
+                        },
+                        "likes": {
+                            "type": "string",
+                            "description": "The user Rate",
+                            "example": "143234567800"
+                        },
+                        "status": {
+                            "type": "string",
+                            "description": "The user Status",
+                            "example": "new_user"
+                        },
+                        "active": {
+                            "type": "string",
+                            "description": "The user Active",
+                            "example": "1"
+                        },
+                        "create_at": {
+                            "type": "date",
+                            "description": "The value of the user's create date",
+                            "example": "2022-08-21T00:00:000.00"
+                        },
+                        "updated_at": {
+                            "type": "date",
+                            "description": "The value of the user's update date",
+                            "example": "2022-08-21T00:00:000.00"
+                        }
+                    },
+                    "required": ["name", "password", "location", "industry", "email", "img"],
+                    "example": {
+                        "name": "Bruno Diaz",
+                        "email": "batman1970@unosquare.com",
+                        "location": "Gotica",
+                        "password": "123456",
+                        "industry": "Justice"
+                    }
+                },
+                "Auth": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "description": "The user Email",
+                            "example": "batman1970@gmail.com"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "The user Password",
+                            "example": "b4tm4n2022"
+                        }
+                    },
+                    "required": ["password", "email"],
+                    "example": {
+                        "email": "batman1970@unosquare.com",
+                        "password": "123456"                        
+                    }
+                }
+                
+            }
+        },
+        "paths": {
+            "/api/login": {
+                "post": {
+                    "tags": ["User"],
+                    "summary": "Login",
+                    "requestBody":{
+                        "required": true,
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Auth"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "/api/users": {
+                "post": {
+                    "tags": ["User"],
+                    "summary": "Create new User - Sing Up",
+                    "requestBody":{
+                        "required": true,
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "get": {
+                    "tags": ["User"],
+                    "summary": "Get all users",
+                    "parameters": [
+                        {
+                        "in": "header",
+                        "name": "x-token",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    }
+                ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+               
+            },
+            "/api/users/pagination":{
+                "get": {
+                    "tags": ["User"],
+                    "summary": "Get all users by pagination",
+                    "parameters": [
+                        {
+                        "in": "header",
+                        "name": "x-token",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "string",                            
+                            "required": false
+                        }
+                    }
+                ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+
+            },
+            "/api/users/{id}":{
+                "put": {
+                    "tags": ["User"],
+                    "summary": "Update User by ID",
+                    "parameters": [
+                        {
+                        "in": "header",
+                        "name": "x-token",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "User _Id",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    }
+                    ],
+                    "requestBody":{
+                        "required": true,
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "403": {
+                            "description": "Do Not have Privileges",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "delete":{
+                    "tags": ["User"],
+                    "summary": "Delete User by ID",
+                    "parameters": [
+                        {
+                        "in": "header",
+                        "name": "x-token",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "User _Id",
+                        "schema": {
+                            "type": "string",                            
+                            "required": true
+                        }
+                    }
+                ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "403": {
+                            "description": "Do Not have Privileges",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+
     },
     "apis": ["http://localhost:3000"]
+
+
+
 }
