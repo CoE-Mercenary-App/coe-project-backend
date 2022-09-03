@@ -9,6 +9,10 @@ const cors = require('cors');
 const { dbConnection } = require('./db/config');
 const app = express();
 
+const logger = require('./log/logger');
+
+logger.logMessage(' < Starting App >');
+
 
 app.use(cors());
 app.use(express.json());

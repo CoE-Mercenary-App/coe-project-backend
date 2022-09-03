@@ -12,9 +12,12 @@ const bcrypt = require('bcryptjs');
 
 const { User } = require('../../models');
 const { generarJWT } = require('../../helpers');
+const Logger = require('../../log/logger');
 
 
 const login = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const { email, password } = req.body;
 
@@ -64,6 +67,8 @@ const login = async(req, res = response) => {
 
 
 const renewToken = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const uid = req.uid;
 

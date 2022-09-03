@@ -11,9 +11,11 @@
 
 const { response } = require('express');
 const { ServiceModel } = require('../../models');
-
+const Logger = require('../../log/logger');
 
 const getServices = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const [_service, total] = await Promise.all([
 
@@ -46,6 +48,8 @@ const getServices = async(req, res = response) => {
 
 
 const newService = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const uid = req.uid;
     const _service = new ServiceModel({
@@ -81,6 +85,8 @@ const newService = async(req, res = response) => {
 
 
 const updateService = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
 
     const id = req.params.id;
@@ -130,6 +136,8 @@ const updateService = async(req, res = response) => {
 
 
 const deleteService = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const id = req.params.id;
 
