@@ -8,14 +8,14 @@ const { check } = require('express-validator');
 
 const {
     validateInputs,
-    validateJWT 
+    validateJWT
 } = require('../../middlewares');
 
 const { getServices, newService, updateService, deleteService } = require('../../controllers');
 
 const router = Router();
 
-router.get('/', validateJWT, getServices);
+router.get('/', getServices);
 
 router.post('/', [
         check('service', 'Service name field is required').not().isEmpty(),

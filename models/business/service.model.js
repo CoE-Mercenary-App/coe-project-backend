@@ -8,7 +8,7 @@ const serviceSchema = Schema({
     reviews: [{ type: String, required: false }],
 
     // ---Relation---
-    user: { required: true, type: Schema.Types.ObjectId, ref: 'User' },
+    user: { required: false, type: Schema.Types.ObjectId, ref: 'User' },
 
     // --data--
     status: { type: String, required: false },
