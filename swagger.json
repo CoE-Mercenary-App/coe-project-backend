@@ -9,18 +9,19 @@
         "host": "localhost:3000",
         "basePath": "/",
         "tags": [{
-            "name": "User",
-            "description": "API for Users"
-        },
-        {
-            "name": "Service",
-            "description": "API for Service"
-        }],
+                "name": "User",
+                "description": "API for Users"
+            },
+            {
+                "name": "Service",
+                "description": "API for Service"
+            }
+        ],
         "schemes": ["http"],
         "consumes": ["application/json"],
         "produces": ["application/json"],
-        "components":{
-            "schemas":{
+        "components": {
+            "schemas": {
                 "User": {
                     "type": "object",
                     "properties": {
@@ -111,10 +112,59 @@
                     "required": ["password", "email"],
                     "example": {
                         "email": "batman1970@unosquare.com",
-                        "password": "123456"                        
+                        "password": "123456"
+                    }
+                },
+                "Service": {
+                    "type": "object",
+                    "properties": {
+                        "service": {
+                            "type": "string",
+                            "description": "The service name",
+                            "example": "Plumber"
+                        },
+                        "price": {
+                            "type": "string",
+                            "description": "The service price",
+                            "example": "23.0"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "The service descriptions",
+                            "example": "plumbing service offered Monday through Friday"
+                        },
+                        "reviews": [{
+                            "type": "string"
+                        }],
+                        "status": {
+                            "type": "string",
+                            "description": "The user Status",
+                            "example": "new_user"
+                        },
+                        "active": {
+                            "type": "string",
+                            "description": "The user Active",
+                            "example": "1"
+                        },
+                        "create_at": {
+                            "type": "date",
+                            "description": "The value of the user's create date",
+                            "example": "2022-08-21T00:00:000.00"
+                        },
+                        "updated_at": {
+                            "type": "date",
+                            "description": "The value of the user's update date",
+                            "example": "2022-08-21T00:00:000.00"
+                        }
+                    },
+                    "required": ["service", "price"],
+                    "example": {
+                        "service": "English class",
+                        "price": "10.0",
+                        "description": "English classes are offered for all levels"
                     }
                 }
-                
+
             }
         },
         "paths": {
@@ -122,11 +172,11 @@
                 "post": {
                     "tags": ["User"],
                     "summary": "Login",
-                    "requestBody":{
+                    "requestBody": {
                         "required": true,
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/Auth"
                                 }
@@ -147,11 +197,11 @@
                 "post": {
                     "tags": ["User"],
                     "summary": "Create new User - Sing Up",
-                    "requestBody":{
+                    "requestBody": {
                         "required": true,
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/User"
                                 }
@@ -171,49 +221,14 @@
                 "get": {
                     "tags": ["User"],
                     "summary": "Get all users",
-                    "parameters": [
-                        {
+                    "parameters": [{
                         "in": "header",
                         "name": "x-token",
                         "schema": {
-                            "type": "string",                            
+                            "type": "string",
                             "required": true
                         }
-                    }
-                ],
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                }
-               
-            },
-            "/api/users/pagination":{
-                "get": {
-                    "tags": ["User"],
-                    "summary": "Get all users by pagination",
-                    "parameters": [
-                        {
-                        "in": "header",
-                        "name": "x-token",
-                        "schema": {
-                            "type": "string",                            
-                            "required": true
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "schema": {
-                            "type": "string",                            
-                            "required": false
-                        }
-                    }
-                ],
+                    }],
                     "responses": {
                         "200": {
                             "description": "OK",
@@ -225,34 +240,65 @@
                 }
 
             },
-            "/api/users/{id}":{
+            "/api/users/pagination": {
+                "get": {
+                    "tags": ["User"],
+                    "summary": "Get all users by pagination",
+                    "parameters": [{
+                            "in": "header",
+                            "name": "x-token",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        },
+                        {
+                            "in": "query",
+                            "name": "page",
+                            "schema": {
+                                "type": "string",
+                                "required": false
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+
+            },
+            "/api/users/{id}": {
                 "put": {
                     "tags": ["User"],
                     "summary": "Update User by ID",
-                    "parameters": [
+                    "parameters": [{
+                            "in": "header",
+                            "name": "x-token",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        },
                         {
-                        "in": "header",
-                        "name": "x-token",
-                        "schema": {
-                            "type": "string",                            
-                            "required": true
+                            "in": "path",
+                            "name": "id",
+                            "description": "User _Id",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
                         }
-                    },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "User _Id",
-                        "schema": {
-                            "type": "string",                            
-                            "required": true
-                        }
-                    }
                     ],
-                    "requestBody":{
+                    "requestBody": {
                         "required": true,
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/User"
                                 }
@@ -274,28 +320,167 @@
                         }
                     }
                 },
-                "delete":{
+                "delete": {
                     "tags": ["User"],
                     "summary": "Delete User by ID",
-                    "parameters": [
+                    "parameters": [{
+                            "in": "header",
+                            "name": "x-token",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        },
                         {
+                            "in": "path",
+                            "name": "id",
+                            "description": "User _Id",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "403": {
+                            "description": "Do Not have Privileges",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+
+            },
+            "/api/services": {
+                "post": {
+                    "tags": ["Service"],
+                    "summary": "Create new Service",
+                    "parameters": [{
                         "in": "header",
                         "name": "x-token",
                         "schema": {
-                            "type": "string",                            
+                            "type": "string",
                             "required": true
+                        }
+                    }],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
                         }
                     },
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "User _Id",
-                        "schema": {
-                            "type": "string",                            
-                            "required": true
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/User"
+                            }
                         }
                     }
-                ],
+                },
+                "get": {
+                    "tags": ["Service"],
+                    "summary": "Get all services",
+                    "parameters": [{
+                        "in": "header",
+                        "name": "x-token",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            },
+            "/api/services/{id}": {
+                "put": {
+                    "tags": ["Service"],
+                    "summary": "Update Service by ID",
+                    "parameters": [{
+                            "in": "header",
+                            "name": "x-token",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        },
+                        {
+                            "in": "path",
+                            "name": "id",
+                            "description": "Service _Id",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "403": {
+                            "description": "Do Not have Privileges",
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "delete": {
+                    "tags": ["Service"],
+                    "summary": "Delete Service by ID",
+                    "parameters": [{
+                            "in": "header",
+                            "name": "x-token",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        },
+                        {
+                            "in": "path",
+                            "name": "id",
+                            "description": "Service _Id",
+                            "schema": {
+                                "type": "string",
+                                "required": true
+                            }
+                        }
+                    ],
                     "responses": {
                         "200": {
                             "description": "OK",
