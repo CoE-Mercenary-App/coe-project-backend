@@ -18,8 +18,11 @@ const mongoose = require('mongoose');
 
 const { User } = require('../../models');
 const { generarJWT } = require('../../helpers');
+const Logger = require('../../log/logger');
 
 const getUsers = async(req, res) => {
+
+    Logger.logRequest(req);
 
     const [users, total] = await Promise.all([
         User
@@ -39,6 +42,8 @@ const getUsers = async(req, res) => {
 
 
 const getUsersPagination = async(req, res) => {
+
+    Logger.logRequest(req);
 
     const page = Number(req.query.page) || 0;
 
@@ -61,6 +66,8 @@ const getUsersPagination = async(req, res) => {
 
 
 const newUser = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const { email, password } = req.body;
 
@@ -108,6 +115,8 @@ const newUser = async(req, res = response) => {
 
 const updateUserPws = async(req, res = response) => {
 
+    Logger.logRequest(req);
+
     const uid = req.params.id;
 
     try {
@@ -148,6 +157,8 @@ const updateUserPws = async(req, res = response) => {
 
 
 const updateUser = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const uid = req.params.id;
 
@@ -201,6 +212,8 @@ const updateUser = async(req, res = response) => {
 
 
 const deleteUser = async(req, res = response) => {
+
+    Logger.logRequest(req);
 
     const uid = req.params.id;
 
